@@ -28,7 +28,7 @@
 
             // Simula o envio do email (grava em txt)
             simularEnvioEmail($email, $senha_temporaria);
-            echo "<script>alert('Uma senha temporaria foi gerada e enviada(simulação). Verifique o arquivo emails_simulados.txt');window.location.href='login.php';</script>";
+            echo "<script>alert('Uma senha temporaria foi gerada e enviada(simulação). Verifique o arquivo emails_simulados.txt');window.location.href='index.php';</script>";
         }else{
             echo "<script>alert('Email nao encontrado');</script>";
         }
