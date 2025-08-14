@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST["busca"])) {
     } else {
         $sql = "SELECT * FROM usuario WHERE nome LIKE :busca_nome ORDER BY nome ASC";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':busca_nome', "%$busca%", PDO::PARAM_STR);
+        $stmt->bindValue(':busca_nome', "$busca%", PDO::PARAM_STR);
     }
 } else {
     $sql = "SELECT * FROM usuario ORDER BY nome ASC";
@@ -59,11 +59,16 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($usuario['nome']) ?></td>
                     <td><?= htmlspecialchars($usuario['email']) ?></td>
                     <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
+                    <td>
+                        <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
+                        <a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('Tem Certeza Que deseja excluir o usuario?')">Excluir</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
     <?php else: ?>
         <p>Nenhum usuário encontrado.</p>
     <?php endif; ?>
+    <a href="principal.php">Voltar</a>
 </body>
 </html>
