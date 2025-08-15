@@ -59,7 +59,8 @@
         <button type="submit">Salvar</button>
         <button type="reset">Cancelar</button>
     </form>
-
+<div class="voltar">
     <a href="principal.php">Voltar</a>
+</div>
 </body>
 </html>

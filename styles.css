@@ -168,3 +168,54 @@ button {
 button:hover {
     background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
 }
+table {
+    border-collapse: collapse; /* junta as bordas */
+    width: 80%; /* largura da tabela */
+    margin: 20px auto; /* centraliza a tabela */
+    color: rgb(0, 0, 0); /* texto branco para contraste */
+    border-radius: 0px; /* cantos arredondados */
+    overflow: hidden; /* para o border-radius funcionar em tabela */
+    border-width: 3px;
+    border-color: #000000;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: center;
+    border-width: 3px;
+    border-color: #000000;
+}
+
+th {
+    background-color:  #007bff;
+    height: 30px;
+    text-align: center;
+    border-width: 0px;
+}
+
+tr:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+}
+.voltar{
+    margin: auto;     /* garante que seja tratado como bloco inline */
+    width: 10%;               /* largura fixa (ou use a largura que quiser) */
+    height: 40px;               /* altura fixa */
+    line-height: 40px;          /* mesma altura para centralizar verticalmente */
+    text-align: center;         /* centraliza horizontalmente o texto */
+    background-color: #0656C4;  /* azul */
+    border: solid;               /* cor do texto branca */
+    border-color: #0656C4;
+    border-radius: 5px;
+    color: #f4f4f4; 
+    transition: transform 0.3s ease;
+}
+.voltar:hover{
+    transform: scale(1.1);
+    
+}

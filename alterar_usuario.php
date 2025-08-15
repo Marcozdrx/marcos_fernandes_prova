@@ -85,6 +85,8 @@
                 <button type="reset">Cancelar</button>
          </form>
         <?php endif; ?>
-        <a href="principal.php">Voltar</a>
+        <div class="voltar">
+    <a href="principal.php">Voltar</a>
+</div>
 </body>
 </html>
