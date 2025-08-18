@@ -1,6 +1,7 @@
 <?php
-    session_start();
     require_once 'conexao.php';
+    require_once 'dropdown.php';
+
 
     // Verifica se o usuario tem permissao sopondo que o perfil 1 seja o administrador
 

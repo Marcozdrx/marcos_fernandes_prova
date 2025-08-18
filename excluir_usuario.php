@@ -1,6 +1,6 @@
 <?php
-    session_start();
     require_once 'conexao.php';
+    require_once 'dropdown.php';
 
     // Verifica se o usuario tem permissao de administrador para excluir o usuario
     if($_SESSION['perfil'] != 1){
@@ -59,7 +59,7 @@
                     <td><?=htmlspecialchars($usuario['nome'])?></td>
                     <td><?=htmlspecialchars($usuario['email'])?></td>
                     <td><?=htmlspecialchars($usuario['id_perfil'])?></td>
-                    <td><a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>" onclick="return confirm('tem certeza que deseja excluir este usuario')"> 🗑️</a></td>
+                    <td class="acoes"><a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>" onclick="return confirm('tem certeza que deseja excluir este usuario')"> 🗑️</a></td>
                 </tr>
                 <?php endforeach; ?>
         </table>

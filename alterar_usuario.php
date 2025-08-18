@@ -1,6 +1,6 @@
 <?php
-    session_start();
     require_once 'conexao.php';
+    require_once 'dropdown.php';
 
     // Verifica se o usuario tem permissao de ADM
     if ($_SESSION['perfil'] != 1) {

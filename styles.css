@@ -31,19 +31,41 @@ header {
     text-align: left;
 }
 
-.logout {
-    text-align: right;
+.logoutdropdown{
+    float: right;
+}
+
+.formdrop{
+    text-align: center;
+    width: 100px; /* Define uma largura fixa */
+    margin: 2px auto; /* Centraliza na tela */
+    padding: 5px;
+    background-color: #333; /* Fundo suave */
+    border-radius: 10px; /* Cantos arredondados */
+    align-items: center; /* Centraliza os elementos dentro do formulário */
+    
 }
 
 .logout button {
     background-color: #d9534f;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 5px 10px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
 }
+.buttondrop{
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 80%;
+}
+
 
 .logout button:hover {
     background-color: #c9302c;
@@ -168,6 +190,9 @@ button {
 button:hover {
     background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
 }
+td{
+    border: none;
+}
 table {
     border-collapse: collapse; /* junta as bordas */
     width: 80%; /* largura da tabela */
@@ -177,31 +202,45 @@ table {
     overflow: hidden; /* para o border-radius funcionar em tabela */
     border-width: 3px;
     border-color: #000000;
+    
 }
-
+.acoes{
+    border-left: 3px solid;
+}
+tr th{
+    border: 3px solid;
+    border-color: #007bff;
+}
+tr{
+    border: 3px solid;
+}
 th, td {
     padding: 10px;
     border: 1px solid #555;
     text-align: center;
     border-width: 3px;
     border-color: #000000;
+    border: none;
 }
 
 th {
     background-color:  #007bff;
     height: 30px;
     text-align: center;
-    border-width: 0px;
 }
 
 tr:hover {
     background-color: #0056b3;
     cursor: pointer;
 }
+td a{
+    color: #007bff;
+}
 a{
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
 }
+
 .voltar{
     margin: auto;     /* garante que seja tratado como bloco inline */
     width: 10%;               /* largura fixa (ou use a largura que quiser) */

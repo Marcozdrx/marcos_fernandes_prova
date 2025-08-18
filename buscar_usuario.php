@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once 'conexao.php';
+require_once 'dropdown.php';
 
 if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] != 2) {
     echo "<script>alert('Acesso negado');window.location.href='principal.php';</script>";
@@ -52,6 +52,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Perfil</th>
+                <th>Ações</th>
             </tr>
             <?php foreach ($usuarios as $usuario): ?>
                 <tr>
@@ -59,8 +60,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($usuario['nome']) ?></td>
                     <td><?= htmlspecialchars($usuario['email']) ?></td>
                     <td><?= htmlspecialchars($usuario['id_perfil']) ?></td>
-                    <td>
-                        <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
+                    <td class="acoes">
+                        <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a> |   
                         <a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('Tem Certeza Que deseja excluir o usuario?')">Excluir</a>
                     </td>
                 </tr>
