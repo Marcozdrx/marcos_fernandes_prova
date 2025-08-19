@@ -57,31 +57,36 @@
     <script src="srcipts.js"></script>
 </head>
 <body>
-    <header>
-        <div class="saudacao">
+    <nav class="navbar">
+        <!-- Menu da esquerda -->
+        <ul class="menu">
+            <?php foreach($opcoes_menu as $categoria => $arquivos): ?>
+                <li class="dropdown">
+                    <a href="#"><?=$categoria?></a>
+                    <ul class="dropdown-menu">
+                        <?php foreach($arquivos as $arquivo): ?>
+                            <li>
+                                <a href="<?=$arquivo?>"><?=ucfirst(str_replace("_", " ",basename($arquivo,".php")))?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <!-- Saudação -->
+        <div class="saudacaodrop">
             <h2><?php echo $_SESSION['usuario']; ?>! Perfil: <?php echo $nome_perfil; ?></h2>
+            
         </div>
-    </header>
-    <nav>
-            <ul class="menu">
-                <?php foreach($opcoes_menu as $categoria => $arquivos): ?>
-                    <li class="dropdown">
-                        <a href="#"><?=$categoria?></a>
-                        <ul class="dropdown-menu">
-                            <?php foreach($arquivos as $arquivo): ?>
-                                <li>
-                                    <a href="<?=$arquivo?>"><?=ucfirst(str_replace("_", " ",basename($arquivo,".php")))?></a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </li>
-                <?php endforeach; ?>
-                <li><div class="logoutdropdow">
+
+        <!-- Botão logout -->
+        <div class="logoutdropdown">
             <form action="logout.php" method="POST" class="formdrop">
                 <button type="submit" class="buttondrop">Logout</button>
             </form>
-        </div></li>
-            </ul>
-        </nav>
+        </div>
+        
+    </nav>
 </body>
 </html>

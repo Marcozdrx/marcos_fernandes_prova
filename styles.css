@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     text-align: center;
+    margin: 0;
 }
 
 .login-container {
@@ -13,9 +14,13 @@ body {
 }
 
 input, button {
-    width: 100%;
+    width: 85%;
     padding: 10px;
     margin: 5px 0;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 header {
@@ -30,45 +35,33 @@ header {
 .saudacao {
     text-align: left;
 }
-
-.logoutdropdown{
-    float: right;
+.saudacaodrop{
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background-color: #333;
+    padding: 0 15px;
 }
 
-.formdrop{
-    text-align: center;
-    width: 100px; /* Define uma largura fixa */
-    margin: 2px auto; /* Centraliza na tela */
-    padding: 5px;
-    background-color: #333; /* Fundo suave */
-    border-radius: 10px; /* Cantos arredondados */
-    align-items: center; /* Centraliza os elementos dentro do formulário */
-    
-}
-
-.logout button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+.saudacaodrop h2 {
     font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.buttondrop{
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 80%;
+    color: #ffffff;
+    margin: 0;
+    font-weight: normal; /* se quiser deixar mais leve */
+    white-space: nowrap;
 }
 
 
 .logout button:hover {
     background-color: #c9302c;
+}
+
+.logoutdropdown {
+    margin-left: auto; /* garante que fique encostado no canto */
 }
 
 .menu {
@@ -77,6 +70,7 @@ header {
     margin: 0;
     display: flex;
     background-color: #333;
+    gap: 15px;
 }
 
 .menu li {
@@ -108,14 +102,47 @@ header {
 }
 
 .dropdown-menu li a {
-    padding: 10px;
+    padding: 8px;
     display: block;
     color: white;
     text-decoration: none;
 }
+.lilogout{
+    margin: 0;
+    height: 5px;
+}
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+.menu li.lilogout {
+    margin-left: auto; /* joga o botão pro final da linha */
+}
+
+
+.formdrop {
+    display: flex;               /* Ativa flexbox */
+    justify-content: center;     /* Centraliza na horizontal */
+    align-items: center;         /* Centraliza na vertical */
+    height: 48px;
+    width: 100px;                /* Largura fixa do formulário */
+    margin: 0 auto;              /* Centraliza o formulário na página */
+    background-color: #333;   /* Fundo cinza */
+    border-radius: 10px;
+    padding: 0;
+
+}
+
+.buttondrop {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-block;       /* não deixa o botão ocupar toda a largura */
 }
 
 #sugestoes {
@@ -162,11 +189,9 @@ label {
 }
 
 /* Ajusta os campos de entrada */
-input[type="text"],
-input[type="email"],
-input[type="password"],
+
 select {
-    width: 80%; /* Ocupa toda a largura do formulário */
+    width: 90%; /* Ocupa toda a largura do formulário */
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -176,7 +201,7 @@ select {
 
 /* Ajusta os botões */
 button {
-    width: 80%;
+    width: 90%;
     padding: 10px;
     background-color: #007bff; /* Azul bonito */
     color: white;
@@ -205,20 +230,20 @@ table {
     
 }
 .acoes{
-    border-left: 3px solid;
+    border-left: 2px solid;
 }
 tr th{
-    border: 3px solid;
+    border: 2px solid;
     border-color: #007bff;
 }
 tr{
-    border: 3px solid;
+    border: 2px solid;
 }
 th, td {
     padding: 10px;
     border: 1px solid #555;
     text-align: center;
-    border-width: 3px;
+    border-width: 2px;
     border-color: #000000;
     border: none;
 }
@@ -231,7 +256,6 @@ th {
 
 tr:hover {
     background-color: #0056b3;
-    cursor: pointer;
 }
 td a{
     color: #007bff;
@@ -253,6 +277,7 @@ a{
     border-radius: 5px;
     color: #f4f4f4; 
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 .voltar:hover{
     transform: scale(1.1);

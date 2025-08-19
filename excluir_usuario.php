@@ -45,7 +45,7 @@
     <h2>Excluir usuario</h2>
     <?php if(!empty($usuarios)): ?>
         <div class="tabela">
-        <table border="2">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>

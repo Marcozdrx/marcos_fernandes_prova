@@ -58,6 +58,7 @@
 </head>
 <body>
     <h2>Pagina Principal</h2>
+                <a href="teste.html">Teste do DROPDOWN</a>
     <header>
         <div class="saudacao">
             <h2>Bem vindo,<?php echo $_SESSION['usuario']; ?>! Perfil: <?php echo $nome_perfil; ?></h2>
