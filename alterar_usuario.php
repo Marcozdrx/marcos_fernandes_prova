@@ -62,10 +62,10 @@
          <form action="processar_alteracao_usuario.php" method="POST">
             
             <input type="hidden" name="id_usuario" value="<?=htmlspecialchars($usuario['id_usuario'])?>">
-            <label for="email">Nome:</label>
+            <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" value="<?=htmlspecialchars($usuario['nome'])?>" required>
 
-            <label for="email">E-mai:</label>
+            <label for="email">E-mail:</label>
             <input type="text" id="email" name="email" value="<?=htmlspecialchars($usuario['email'])?>" required>
 
             <label for="id_perfil">Perfil:</label>

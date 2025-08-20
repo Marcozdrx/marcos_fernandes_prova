@@ -1,0 +1,119 @@
+VALIDAÇÕES PARA TELEFONE
+========================
+
+1. VALIDAÇÃO BÁSICA (APENAS NÚMEROS)
+-------------------------------------
+Regex: /^[0-9]+$/
+Descrição: Aceita apenas números, sem formatação
+Exemplo: 11987654321
+
+2. VALIDAÇÃO COM COMPRIMENTO FIXO
+----------------------------------
+Regex: /^[0-9]{10,11}$/
+Descrição: Aceita 10 ou 11 dígitos (DDD + número)
+Exemplo: 11987654321 (11 dígitos) ou 1987654321 (10 dígitos)
+
+3. VALIDAÇÃO COM DDD OBRIGATÓRIO
+---------------------------------
+Regex: /^[1-9]{2}[0-9]{8,9}$/
+Descrição: DDD deve começar com 1-9, seguido de 8 ou 9 dígitos
+Exemplo: 11987654321, 2198765432
+
+4. VALIDAÇÃO COM FORMATO BRASILEIRO
+-----------------------------------
+Regex: /^\([1-9]{2}\)\s?[0-9]{4,5}-?[0-9]{4}$/
+Descrição: Aceita formatos como (11) 98765-4321 ou (11) 8765-4321
+Exemplo: (11) 98765-4321, (21) 8765-4321
+
+5. VALIDAÇÃO COMPLETA (RECOMENDADA)
+-----------------------------------
+Regex: /^\(?[1-9]{2}\)?\s?[0-9]{4,5}-?[0-9]{4}$/
+Descrição: Aceita formatos com ou sem parênteses, espaços e hífens
+Exemplos aceitos:
+- 11987654321
+- (11) 98765-4321
+- (11) 8765-4321
+- 11 98765-4321
+- 11 8765-4321
+
+6. VALIDAÇÃO INTERNACIONAL
+---------------------------
+Regex: /^\+?[1-9][0-9]{0,14}$/
+Descrição: Formato internacional, aceita +55 11 98765-4321
+Exemplo: +5511987654321
+
+7. IMPLEMENTAÇÃO EM PHP
+------------------------
+```php
+function validarTelefone($telefone) {
+    // Remove todos os caracteres não numéricos
+    $telefone_limpo = preg_replace('/[^0-9]/', '', $telefone);
+    
+    // Verifica se tem 10 ou 11 dígitos
+    if (strlen($telefone_limpo) < 10 || strlen($telefone_limpo) > 11) {
+        return false;
+    }
+    
+    // Verifica se o DDD é válido (11-99)
+    $ddd = substr($telefone_limpo, 0, 2);
+    if ($ddd < 11 || $ddd > 99) {
+        return false;
+    }
+    
+    return true;
+}
+```
+
+8. IMPLEMENTAÇÃO EM JAVASCRIPT
+-------------------------------
+```javascript
+function validarTelefone(telefone) {
+    // Remove formatação
+    const telefoneLimpo = telefone.replace(/\D/g, '');
+    
+    // Verifica comprimento
+    if (telefoneLimpo.length < 10 || telefoneLimpo.length > 11) {
+        return false;
+    }
+    
+    // Verifica DDD
+    const ddd = parseInt(telefoneLimpo.substring(0, 2));
+    if (ddd < 11 || ddd > 99) {
+        return false;
+    }
+    
+    return true;
+}
+```
+
+9. FORMATAR TELEFONE
+---------------------
+```php
+function formatarTelefone($telefone) {
+    $telefone_limpo = preg_replace('/[^0-9]/', '', $telefone);
+    
+    if (strlen($telefone_limpo) == 11) {
+        return '(' . substr($telefone_limpo, 0, 2) . ') ' . 
+               substr($telefone_limpo, 2, 5) . '-' . 
+               substr($telefone_limpo, 7);
+    } elseif (strlen($telefone_limpo) == 10) {
+        return '(' . substr($telefone_limpo, 0, 2) . ') ' . 
+               substr($telefone_limpo, 2, 4) . '-' . 
+               substr($telefone_limpo, 6);
+    }
+    
+    return $telefone;
+}
+```
+
+10. EXEMPLOS DE USO
+--------------------
+- Telefone fixo: (11) 3333-4444
+- Celular: (11) 98765-4321
+- DDDs válidos: 11, 21, 31, 41, 51, 61, 71, 81, 91
+- DDDs inválidos: 00, 01, 10, 20, 30, etc.
+
+11. RECOMENDAÇÃO PARA O SISTEMA
+--------------------------------
+Usar a validação completa (item 5) que aceita múltiplos formatos
+e depois normalizar para o formato padrão no banco de dados. 

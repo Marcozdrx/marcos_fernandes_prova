@@ -24,7 +24,7 @@
         // Exclui o usuario do banco de dados
         $sql = "DELETE FROM usuario WHERE id_usuario = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id_usuario', PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id_usuario, PDO::PARAM_INT);
 
         if($stmt->execute()){
             echo"<script>alert('Usuario excluido com sucesso');window.location.href='excluir_usuario.php';</script>";

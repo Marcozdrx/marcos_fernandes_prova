@@ -1,3 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Container do menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botão do dropdown */
+.dropdown button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Conteúdo do dropdown */
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: hidden;
+
+  /* Inicialmente escondido com animação */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none; /* impede clicar enquanto invisível */
+}
+
+/* Itens do dropdown */
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Ao passar o mouse no container, mostrar o dropdown */
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* agora é clicável */
+}
+</style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button>Menu</button>
+  <div class="dropdown-content">
+    <a href="#">Opção 1</a>
+    <a href="#">Opção 2</a>
+    <a href="#">Opção 3</a>
+  </div>
+</div>
 <?php
     session_start();
     require_once 'conexao.php';
@@ -57,18 +121,10 @@
     <script src="srcipts.js"></script>
 </head>
 <body>
-    <h2>Pagina Principal</h2>
-    <header>
-        <div class="saudacao">
-            <h2>Bem vindo,<?php echo $_SESSION['usuario']; ?>! Perfil: <?php echo $nome_perfil; ?></h2>
-        </div>
-        <div class="logout">
-            <form action="logout.php" method="POST">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-    </header>
-    <nav>
+    <nav class="navbar">
+        <!-- Menu da esquerda -->
+        <div class="dropdown">
+          <div class="dropdown-content">
             <ul class="menu">
                 <?php foreach($opcoes_menu as $categoria => $arquivos): ?>
                     <li class="dropdown">
@@ -83,6 +139,22 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </nav>
+          </div>
+        </div>
+        <!-- Saudação -->
+        <div class="saudacaodrop">
+            <h2><?php echo $_SESSION['usuario']; ?>! Perfil: <?php echo $nome_perfil; ?></h2>
+            
+        </div>
+
+        <!-- Botão logout -->
+        <div class="logoutdropdown">
+            <form action="logout.php" method="POST" class="formdrop">
+                <button type="submit" class="buttondrop">Logout</button>
+            </form>
+        </div>
+      </nav>
+</body>
+</html>
 </body>
 </html>
