@@ -70,5 +70,6 @@
             senha2.type=tipo;
         }
     </script>
+        <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>

@@ -73,5 +73,6 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="voltar">
     <a href="principal.php">Voltar</a>
 </div>
+<center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>

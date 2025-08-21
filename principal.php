@@ -84,5 +84,6 @@
                 <?php endforeach; ?>
             </ul>
         </nav>
+        <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>

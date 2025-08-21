@@ -52,5 +52,6 @@
         <button type="submit">Entrar</button>
     </form>
     <p><a href="recuperar_senha.php">Esqueci a minha senha</a></p>
+    <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>
