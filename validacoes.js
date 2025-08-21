@@ -46,10 +46,32 @@ function validarNomeUsuario() {
     return true;
 }
 
-function validarFormularioUsuario() {
-    let nome = document.getElementById("nome").value;
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("senha").value;
+function validarNomeCliente() {
+    let nomeCliente = document.getElementById("nome_cliente").value;
+    
+    // Remove espaços em branco no início e fim
+    nomeCliente = nomeCliente.trim();
+    
+    // Verifica se o nome tem pelo menos 2 caracteres
+    if (nomeCliente.length < 2) {
+        alert("O nome deve ter pelo menos 2 caracteres.");
+        return false;
+    }
+    
+    // Regex que permite apenas letras (incluindo acentos), espaços e hífens
+    let regexNomeCliente = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+    
+    if (!regexNomeCliente.test(nomeCliente)) {
+        alert("O nome não pode conter números ou caracteres especiais. Use apenas letras, espaços, hífens e apóstrofos.");
+        return false;
+    }
+    
+    return true;
+}
+
+function validarFormularioCliente() {
+    let nomeCliente = document.getElementById("nome_cliente").value;
+    let email_cliente = document.getElementById("email").value;
     
     // Valida o nome
     if (!validarNomeUsuario()) {
@@ -58,14 +80,27 @@ function validarFormularioUsuario() {
     
     // Valida o email
     let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexEmail.test(email)) {
+    if (!regexEmail.test(email_cliente)) {
         alert("Digite um e-mail válido.");
         return false;
     }
     
-    // Valida a senha (mínimo 6 caracteres)
-    if (senha.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres.");
+    
+    return true;
+}
+function validarTelefone(telefone) {
+    // Remove formatação
+    let telefoneCliente = document.getElementById("telefone").value;
+    const telefoneLimpo = telefone.replace(/\D/g, '');
+    
+    // Verifica comprimento
+    if (telefoneCliente.length < 10 || telefoneLimpo.length > 11) {
+        return false;
+    }
+    
+    // Verifica DDD
+    const ddd = parseInt(telefoneLimpo.substring(0, 2));
+    if (ddd < 11 || ddd > 99) {
         return false;
     }
     
