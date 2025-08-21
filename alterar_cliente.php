@@ -23,7 +23,7 @@
             } else {
                 $sql = "SELECT * FROM cliente WHERE nome_cliente LIKE :busca_nome";
                 $stmt = $pdo->prepare($sql);
-                $busca_nome = "%$busca%";
+                $busca_nome = "$busca%";
                 $stmt->bindParam(':busca_nome', $busca_nome, PDO::PARAM_STR);
             }
             
@@ -37,6 +37,7 @@
         }
     }
 ?>
+<!--Crianção do HTML-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -60,7 +61,7 @@
         <?php  if($cliente): ?>
         <!-- Formulario para alterar clientes-->
             <form action="processar_alteracao_cliente.php" method="POST">
-            
+                
                 <input type="hidden" name="id_cliente" value="<?=htmlspecialchars($cliente['id_cliente'])?>">
                 
                 <label for="nome">Nome:</label>

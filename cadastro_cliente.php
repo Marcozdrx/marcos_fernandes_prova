@@ -2,59 +2,6 @@
     require_once 'conexao.php';
     require_once 'dropdown.php';
 
-// Função para validar e formatar telefone
-function formatarTelefone($telefone) {
-    // Remove tudo que não for número
-    $telefone = preg_replace('/\D/', '', $telefone);
-
-    // Se tiver 10 dígitos (telefone fixo antigo, ex: (47)7778-9901)
-    if (strlen($telefone) == 10) {
-        return sprintf("(%s)%s-%s",
-            substr($telefone, 0, 2),  // DDD
-            substr($telefone, 2, 4),  // primeiros 4
-            substr($telefone, 6, 4)   // últimos 4
-        );
-    }
-
-    // Se tiver 11 dígitos (celular com 9, ex: (47)97778-9901)
-    if (strlen($telefone) == 11) {
-        return sprintf("(%s)%s-%s",
-            substr($telefone, 0, 2),  // DDD
-            substr($telefone, 2, 5),  // primeiros 5
-            substr($telefone, 7, 4)   // últimos 4
-        );
-    }
-
-    return false; // inválido
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST['nome'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $telefone = $_POST['telefone'] ?? '';
-
-    // Valida e formata telefone
-    $telefone = formatarTelefone($telefone);
-    if ($telefone === false) {
-        die("Telefone inválido! Use algo como (47)7778-9901 ou (47)97778-9901.");
-    }
-
-    try {
-        $sql = "INSERT INTO clientes (nome, email, telefone) VALUES (:nome, :email, :telefone)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telefone', $telefone);
-
-        $stmt->execute();
-
-        echo "Cadastro realizado com sucesso!";
-    } catch (PDOException $e) {
-        echo "Erro: " . $e->getMessage();
-    }
-}
-
-
     // Verifica se o usuario tem permissao sopondo que o perfil 1 seja o administrador e o 2 seja  asecretaria
     if($_SESSION['perfil']!=1 && $_SESSION['perfil']!=2){
         echo "Acesso negado!";
