@@ -58,7 +58,7 @@
         <label>Endereço: </label>
         <input type="text" name="endereco" id="endereco" required>
         <label>Telefone: </label>
-        <input type="text" name="telefone" id="telefone" required>
+        <input type="text" name="telefone" id="telefone" placeholder="(99)9999-9999" pattern="\(\d{2}\)\d{4,5}-\d{4}" title="Digite no formato: (99)9999-9999" maxlength="14" required>
         <label>E-mail: </label>
         <input type="email" name="email" id="email" required>
         <button type="submit">Salvar</button>

@@ -106,3 +106,20 @@ function validarTelefone(telefone) {
     
     return true;
 }
+const telefone = document.getElementById("telefone");
+
+telefone.addEventListener("input", function(){
+    let valor = telefone.value.replace(/\D/g, ""); //Remove tudo o que nao for numero
+    if(valor.length > 10){
+        valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1)$2-$3")
+    }else if(valor.length > 5){
+        valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1)$2-$3")
+    }else if(valor.length > 2){
+        valor = valor.replace(/^(\d{2})(\d{0,5})/, "($1)$2")
+    }else{
+        valor = valor.replace(/^(\d*)/, "($1")
+    }
+
+    telefone.value = valor
+
+})
