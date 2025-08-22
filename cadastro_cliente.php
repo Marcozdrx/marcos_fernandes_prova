@@ -1,84 +1,44 @@
 <?php
-    require_once 'conexao.php';
-    require_once 'dropdown.php';
+require_once 'conexao.php';
+require_once 'dropdown.php';
+session_start();
 
-// Função para validar e formatar telefone
-function formatarTelefone($telefone) {
+// Verifica permissão (perfil 1 = admin, 2 = secretaria)
+if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] != 2) {
+    echo "Acesso negado!";
+    exit();
+}
+
+// Função para validar telefone no servidor
+function validarTelefone($telefone) {
     // Remove tudo que não for número
     $telefone = preg_replace('/\D/', '', $telefone);
 
-    // Se tiver 10 dígitos (telefone fixo antigo, ex: (47)7778-9901)
-    if (strlen($telefone) == 10) {
-        return sprintf("(%s)%s-%s",
-            substr($telefone, 0, 2),  // DDD
-            substr($telefone, 2, 4),  // primeiros 4
-            substr($telefone, 6, 4)   // últimos 4
-        );
+    // Verifica se tem 10 ou 11 dígitos
+    if (preg_match('/^\d{10,11}$/', $telefone)) {
+        return $telefone;
     }
 
-    // Se tiver 11 dígitos (celular com 9, ex: (47)97778-9901)
-    if (strlen($telefone) == 11) {
-        return sprintf("(%s)%s-%s",
-            substr($telefone, 0, 2),  // DDD
-            substr($telefone, 2, 5),  // primeiros 5
-            substr($telefone, 7, 4)   // últimos 4
-        );
-    }
-
-    return false; // inválido
+    return false;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST['nome'] ?? '';
-    $email = $_POST['email'] ?? '';
+    $nome = trim($_POST['nome_cliente'] ?? '');
+    $email = trim($_POST['email'] ?? '');
     $telefone = $_POST['telefone'] ?? '';
+    $endereco = trim($_POST['endereco'] ?? '');
 
-    // Valida e formata telefone
-    $telefone = formatarTelefone($telefone);
-    if ($telefone === false) {
-        die("Telefone inválido! Use algo como (47)7778-9901 ou (47)97778-9901.");
-    }
-
-    try {
-        $sql = "INSERT INTO clientes (nome, email, telefone) VALUES (:nome, :email, :telefone)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telefone', $telefone);
-
-        $stmt->execute();
-
-        echo "Cadastro realizado com sucesso!";
-    } catch (PDOException $e) {
-        echo "Erro: " . $e->getMessage();
-    }
-}
-
-
-    // Verifica se o usuario tem permissao sopondo que o perfil 1 seja o administrador e o 2 seja  asecretaria
-    if($_SESSION['perfil']!=1 && $_SESSION['perfil']!=2){
-        echo "Acesso negado!";
-        exit();
-    }
-    
-    if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $nome = trim($_POST['nome_cliente']);
-        $email = trim($_POST['email']);
-        $telefone = $_POST['telefone'];
-        $endereco = $_POST['endereco'];
-
-        // Validação do nome no servidor
-        // Validação de email em comentario para fazer testes com email inexistentes
-        // Caso queira testar a validação retire o comentario
-        if (empty($nome) || strlen($nome) < 2) {
-            echo "<script>alert('O nome deve ter pelo menos 2 caracteres.');</script>";
-        } elseif (!preg_match('/^[a-zA-ZÀ-ÿ\s\-\']+$/u', $nome)) {
-            echo "<script>alert('O nome não pode conter números ou caracteres especiais.');</script>";
-        // } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        //    echo "<script>alert('Digite um e-mail válido.');</script>";
-        } else {
-            $sql = "INSERT INTO cliente(nome_cliente, endereco, telefone, email)
-            VALUES (:nome_cliente, :endereco, :telefone, :email)";
+    // Validação no servidor
+    if (empty($nome) || strlen($nome) < 2 || !preg_match('/^[a-zA-ZÀ-ÿ\s\-\']+$/u', $nome)) {
+        echo "<script>alert('Nome inválido. Use apenas letras, espaços e hífens.');</script>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Digite um e-mail válido.');</script>";
+    } elseif (!$telefone = validarTelefone($telefone)) {
+        echo "<script>alert('Telefone inválido. Use somente números (10 ou 11 dígitos).');</script>";
+    } else {
+        try {
+            $sql = "INSERT INTO cliente (nome_cliente, endereco, telefone, email)
+                    VALUES (:nome_cliente, :endereco, :telefone, :email)";
 
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(":nome_cliente", $nome);
@@ -86,13 +46,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":telefone", $telefone);
             $stmt->bindParam(":email", $email);
 
-            if($stmt->execute()){
-                echo "<script>alert('Usuario cadastrado com sucesso!');</script>";
-            }else{
-                echo "<script>alert('Erro ao cadastrar usuario');</script>";
+            if ($stmt->execute()) {
+                echo "<script>alert('Cliente cadastrado com sucesso!');</script>";
+            } else {
+                echo "<script>alert('Erro ao cadastrar cliente.');</script>";
             }
+        } catch (PDOException $e) {
+            echo "Erro: " . $e->getMessage();
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,20 +71,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="cadastro_cliente.php" method="POST" onsubmit="return validarFormularioCliente()">
         <label>Nome: </label>
         <input type="text" name="nome_cliente" id="nome_cliente" required onblur="validarNomeCliente()">
+
         <label>Endereço: </label>
         <input type="text" name="endereco" id="endereco" required>
+
         <label>Telefone: </label>
-        <input type="text" name="telefone" id="telefone" required>
+        <input type="text" name="telefone" id="telefone" required onblur="formatarTelefone()">
+
         <label>E-mail: </label>
         <input type="email" name="email" id="email" required>
+
         <button type="submit">Salvar</button>
         <button type="reset">Cancelar</button>
     </form>
-<div class="voltar">
-    <a href="principal.php">Voltar</a>
-</div>
 
-<script src="validacoes.js"></script>
+    <div class="voltar">
+        <a href="principal.php">Voltar</a>
+    </div>
+    <script>
+// Validação do nome
+function validarNomeCliente() {
+    let nome = document.getElementById("nome_cliente").value.trim();
+    let regex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+
+    if (nome.length < 2) {
+        alert("O nome deve ter pelo menos 2 caracteres.");
+        return false;
+    }
+    if (!regex.test(nome)) {
+        alert("Nome inválido. Use apenas letras, espaços, hífens e apóstrofos.");
+        return false;
+    }
+    return true;
+}
+
+// Validação e formatação do telefone
+function formatarTelefone() {
+    let campo = document.getElementById("telefone");
+    let numero = campo.value.replace(/\D/g, '');
+
+    if (numero.length === 10) {
+        campo.value = `(${numero.substring(0,2)})${numero.substring(2,6)}-${numero.substring(6,10)}`;
+    } else if (numero.length === 11) {
+        campo.value = `(${numero.substring(0,2)})${numero.substring(2,7)}-${numero.substring(7,11)}`;
+    } else {
+        alert("Telefone inválido. Use 10 ou 11 dígitos numéricos.");
+        campo.focus();
+        return false;
+    }
+    return true;
+}
+
+// Validação do formulário completo
+function validarFormularioCliente() {
+    let nomeValido = validarNomeCliente();
+    let email = document.getElementById("email").value.trim();
+    let telefone = document.getElementById("telefone").value.replace(/\D/g, '');
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nomeValido) return false;
+
+    if (!emailRegex.test(email)) {
+        alert("Digite um e-mail válido.");
+        return false;
+    }
+
+    if (telefone.length !== 10 && telefone.length !== 11) {
+        alert("Telefone inválido. Deve conter 10 ou 11 dígitos.");
+        return false;
+    }
+
+    return true;
+}
+</script>
 <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>
