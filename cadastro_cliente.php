@@ -1,7 +1,6 @@
 <?php
-require_once 'conexao.php';
-require_once 'dropdown.php';
-session_start();
+    require_once 'conexao.php';
+    require_once 'dropdown.php';
 
     // Verifica se o usuario tem permissao sopondo que o perfil 1 seja o administrador e o 2 seja  asecretaria
     if($_SESSION['perfil']!=1 && $_SESSION['perfil']!=2){
@@ -34,16 +33,13 @@ session_start();
             $stmt->bindParam(":telefone", $telefone);
             $stmt->bindParam(":email", $email);
 
-            if ($stmt->execute()) {
-                echo "<script>alert('Cliente cadastrado com sucesso!');</script>";
-            } else {
-                echo "<script>alert('Erro ao cadastrar cliente.');</script>";
+            if($stmt->execute()){
+                echo "<script>alert('Usuario cadastrado com sucesso!');</script>";
+            }else{
+                echo "<script>alert('Erro ao cadastrar usuario');</script>";
             }
-        } catch (PDOException $e) {
-            echo "Erro: " . $e->getMessage();
         }
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -58,27 +54,21 @@ session_start();
     <h2>Cadastrar Cliente</h2>
     <form action="cadastro_cliente.php" method="POST" onsubmit="return validarFormularioCliente()">
         <label>Nome: </label>
-        <input type="text" name="nome_cliente" id="nome_cliente" required>
-
+        <input type="text" name="nome_cliente" id="nome_cliente" required onblur="validarNomeCliente()">
         <label>Endereço: </label>
         <input type="text" name="endereco" id="endereco" required>
-
         <label>Telefone: </label>
-        
         <input type="text" name="telefone" id="telefone" placeholder="(99)9999-9999" pattern="\(\d{2}\)\d{4,5}-\d{4}" title="Digite no formato: (99)9999-9999" maxlength="14" required>
-
         <label>E-mail: </label>
         <input type="email" name="email" id="email" required>
-
         <button type="submit">Salvar</button>
         <button type="reset">Cancelar</button>
     </form>
+<div class="voltar">
+    <a href="principal.php">Voltar</a>
+</div>
 
-    <div class="voltar">
-        <a href="principal.php">Voltar</a>
-    </div>
-    <script>
-</script>
+<script src="validacoes.js"></script>
 <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>
