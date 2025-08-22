@@ -33,6 +33,7 @@
         }
     }
 ?>
+<!-- Criação do HTML -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -43,6 +44,7 @@
 </head>
 <body>
     <h2>Excluir cliente</h2>
+    <!-- Se o array usuarios nao estiver nulo apresentara os dados do BD -->
     <?php if(!empty($clientes)): ?>
         <div class="tabela">
         <table>
@@ -53,8 +55,10 @@
                 <th>Endereço</th>
                 <th>Ações</th>
             </tr>
+            <!-- Criação do foreach -->
             <?php foreach($clientes as $cliente): ?>
                 <tr>
+                    <!-- Coloca os dados trazidos do SQL na tabela nos campos designados -->
                     <td><?= htmlspecialchars($cliente['nome_cliente']) ?></td>
                     <td><?= htmlspecialchars($cliente['email']) ?></td>
                     <td><?= htmlspecialchars($cliente['telefone']) ?></td>
@@ -62,9 +66,11 @@
                     <td class="acoes"><a href="excluir_cliente.php?id=<?=htmlspecialchars($cliente['id_cliente'])?>" onclick="return confirm('tem certeza que deseja excluir este cliente')"> 🗑️</a></td>
                 </tr>
                 <?php endforeach; ?>
+                <!-- final foreach -->
         </table>
             </div>
     <?php else: ?>
+        <!-- caso não encontre nenhuma usuario trará a seguinte mensagem -->
         <p>Nenhum cliente encontrado</p>
         <?php endif?>
         <div class="voltar">

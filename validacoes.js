@@ -23,6 +23,7 @@ function validarFuncionario() {
     return true;
 }
 
+//Função para validar o nome do usuario
 function validarNomeUsuario() {
     let nome = document.getElementById("nome").value;
     
@@ -38,6 +39,7 @@ function validarNomeUsuario() {
     // Regex que permite apenas letras (incluindo acentos), espaços e hífens
     let regexNome = /^[a-zA-ZÀ-ÿ\s\-']+$/;
     
+    //Alerta para o usuario indicando o que está errado
     if (!regexNome.test(nome)) {
         alert("O nome não pode conter números ou caracteres especiais. Use apenas letras, espaços, hífens e apóstrofos.");
         return false;
@@ -46,6 +48,8 @@ function validarNomeUsuario() {
     return true;
 }
 
+
+//Função para validar o nome do cliente
 function validarNomeCliente() {
     let nomeCliente = document.getElementById("nome_cliente").value;
     
@@ -61,6 +65,7 @@ function validarNomeCliente() {
     // Regex que permite apenas letras (incluindo acentos), espaços e hífens
     let regexNomeCliente = /^[a-zA-ZÀ-ÿ\s\-']+$/;
     
+     //Alerta para o usuario indicando o que está errado
     if (!regexNomeCliente.test(nomeCliente)) {
         alert("O nome não pode conter números ou caracteres especiais. Use apenas letras, espaços, hífens e apóstrofos.");
         return false;
@@ -69,8 +74,8 @@ function validarNomeCliente() {
     return true;
 }
 
+// Função para validar o formulario do cliente, com o email e nome
 function validarFormularioCliente() {
-    let nomeCliente = document.getElementById("nome_cliente").value;
     let email_cliente = document.getElementById("email").value;
     
     // Valida o nome
@@ -88,17 +93,19 @@ function validarFormularioCliente() {
     
     return true;
 }
+
+// Função para validar o telefone
 function validarTelefone(telefone) {
     // Remove formatação
     let telefoneCliente = document.getElementById("telefone").value;
     const telefoneLimpo = telefone.replace(/\D/g, '');
     
-    // Verifica comprimento
+    // Verifica comprimento se for menor que 10
     if (telefoneCliente.length < 10 || telefoneLimpo.length > 11) {
         return false;
     }
     
-    // Verifica DDD
+    // Verifica DDD para nao ser inexistente
     const ddd = parseInt(telefoneLimpo.substring(0, 2));
     if (ddd < 11 || ddd > 99) {
         return false;
@@ -106,10 +113,13 @@ function validarTelefone(telefone) {
     
     return true;
 }
+
+//Codigo para adicionar mascara no campo telefone
 const telefone = document.getElementById("telefone");
 
 telefone.addEventListener("input", function(){
     let valor = telefone.value.replace(/\D/g, ""); //Remove tudo o que nao for numero
+    // Adiconiona a mascara de acordo com a quantidade de caracteres(numeros)
     if(valor.length > 10){
         valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1)$2-$3")
     }else if(valor.length > 5){
@@ -120,6 +130,7 @@ telefone.addEventListener("input", function(){
         valor = valor.replace(/^(\d*)/, "($1")
     }
 
+    // Atribui os dados do telefone a variavel valor
     telefone.value = valor
 
 })

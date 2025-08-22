@@ -11,6 +11,7 @@
     // Inicializa variaveis
 
     $cliente = null;
+    // Verifica se o metodo do formulario usado é POST, para inserir dados com segurança
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         if(!empty($_POST['busca_cliente'])){
             $busca = trim($_POST['busca_cliente']);
@@ -27,7 +28,7 @@
                 $stmt->bindParam(':busca_nome', $busca_nome, PDO::PARAM_STR);
             }
             
-            $stmt->execute();
+            $stmt->execute(); // Executa o SQL
             $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Se o cliente nao for encontrado, exibe um alerta
@@ -64,16 +65,16 @@
                 
                 <input type="hidden" name="id_cliente" value="<?=htmlspecialchars($cliente['id_cliente'])?>">
                 
-                <label for="nome">Nome:</label>
+                <label for="nome">Nome:</label> <!-- Nome -->
                 <input type="text" id="nome_cliente" name="nome_cliente" value="<?=htmlspecialchars($cliente['nome_cliente'])?>" required>
 
-                <label for="email">E-mail:</label>
+                <label for="email">E-mail:</label> <!-- E-mail -->
                 <input type="text" id="email" name="email" value="<?=htmlspecialchars($cliente['email'])?>" required>
 
-                <label for="telefone">telefone:</label>
+                <label for="telefone">telefone:</label> <!-- Telefone -->
                 <input type="text" id="telefone" name="telefone" value="<?=htmlspecialchars($cliente['telefone'])?>" required>
 
-                <label for="endereco">Endereço:</label>
+                <label for="endereco">Endereço:</label> <!-- Endereço -->
                 <input type="text" id="endereco" name="endereco" value="<?=htmlspecialchars($cliente['endereco'])?>" required>
 
                 <button type="submit">Alterar</button>
@@ -83,7 +84,7 @@
         <div class="voltar">
     <a href="principal.php">Voltar</a>
 </div>
-<script src="validacoes.js"></script>
+<script src="validacoes.js"></script> <!-- JS para a s validações funcionarem corretamente -->
 <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
 </html>
