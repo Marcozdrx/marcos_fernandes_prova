@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Cadastrar Cliente</h2>
     <form action="cadastro_cliente.php" method="POST" onsubmit="return validarFormularioCliente()">
         <label>Nome: </label>
-        <input type="text" name="nome_cliente" id="nome_cliente" required onblur="validarNomeCliente()">
+        <input type="text" name="nome_cliente" id="nome_cliente" required>
 
         <label>Endereço: </label>
         <input type="text" name="endereco" id="endereco" required>
@@ -89,60 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="principal.php">Voltar</a>
     </div>
     <script>
-// Validação do nome
-function validarNomeCliente() {
-    let nome = document.getElementById("nome_cliente").value.trim();
-    let regex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
-
-    if (nome.length < 2) {
-        alert("O nome deve ter pelo menos 2 caracteres.");
-        return false;
-    }
-    if (!regex.test(nome)) {
-        alert("Nome inválido. Use apenas letras, espaços, hífens e apóstrofos.");
-        return false;
-    }
-    return true;
-}
-
-// Validação e formatação do telefone
-function formatarTelefone() {
-    let campo = document.getElementById("telefone");
-    let numero = campo.value.replace(/\D/g, '');
-
-    if (numero.length === 10) {
-        campo.value = `(${numero.substring(0,2)})${numero.substring(2,6)}-${numero.substring(6,10)}`;
-    } else if (numero.length === 11) {
-        campo.value = `(${numero.substring(0,2)})${numero.substring(2,7)}-${numero.substring(7,11)}`;
-    } else {
-        alert("Telefone inválido. Use 10 ou 11 dígitos numéricos.");
-        campo.focus();
-        return false;
-    }
-    return true;
-}
-
-// Validação do formulário completo
-function validarFormularioCliente() {
-    let nomeValido = validarNomeCliente();
-    let email = document.getElementById("email").value.trim();
-    let telefone = document.getElementById("telefone").value.replace(/\D/g, '');
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!nomeValido) return false;
-
-    if (!emailRegex.test(email)) {
-        alert("Digite um e-mail válido.");
-        return false;
-    }
-
-    if (telefone.length !== 10 && telefone.length !== 11) {
-        alert("Telefone inválido. Deve conter 10 ou 11 dígitos.");
-        return false;
-    }
-
-    return true;
-}
 </script>
 <center><address>Estudante / Desenvolvimento de Sistemas / Marcos Paulo Fernandes</address></center>
 </body>
