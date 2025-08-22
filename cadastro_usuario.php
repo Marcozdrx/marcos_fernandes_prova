@@ -24,21 +24,30 @@
         } elseif (strlen($senha) < 6) {
             echo "<script>alert('A senha deve ter pelo menos 6 caracteres.');</script>";
         } else {
+            // Consulta para saber se há um email igual ja cadastrado
+            $sqlVerificaEmail = "SELECT id_usuario FROM usuario WHERE email = :email LIMIT 1";
+            $stmt = $pdo->prepare($sqlVerificaEmail); // Prepara a consulta contra ataques SQL Injection
+            $stmt->execute(([':email' => $email])); // Execute se o dado pego por POST foi igual a algum email
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-            $sql = "INSERT INTO usuario(nome, email, senha, id_perfil)
-            VALUES (:nome, :email, :senha, :id_perfil)";
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(":nome", $nome);
-            $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":senha", $senha_hash);
-            $stmt->bindParam(":id_perfil", $id_perfil);
-
-            if($stmt->execute()){
-                echo "<script>alert('Usuario cadastrado com sucesso!');</script>";
+            
+            if($stmt->rowCount() > 0){ // Se for maior que zero
+                echo "<script>alert('Usuario não cadastrado, E-mail ja utilizado!');window.location.href='cadastro_usuario.php';</script>";
             }else{
-                echo "<script>alert('Erro ao cadastrar usuario');</script>";
+
+                $sql = "INSERT INTO usuario(nome, email, senha, id_perfil)
+                VALUES (:nome, :email, :senha, :id_perfil)";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":nome", $nome);
+                $stmt->bindParam(":email", $email);
+                $stmt->bindParam(":senha", $senha_hash);
+                $stmt->bindParam(":id_perfil", $id_perfil);
+
+                if($stmt->execute()){
+                    echo "<script>alert('Usuario cadastrado com sucesso!');</script>";
+                }else{
+                    echo "<script>alert('Erro ao cadastrar usuario');</script>";
+                }
             }
         }
     }
